@@ -12,16 +12,18 @@
 # CCPCRE=-I/usr/local/include -DUSEPCRE
 # LDPCRE=-L/usr/local/lib -lpcre
 
-CXX?=g++
+# CXX?=g++
+CXX=/opt/wasi-sdk/bin/clang++
 # can override
-CXXFLAGS?=-O3 -g
+CXXFLAGS=-O3 -g --target=wasm32-wasi -ftls-model=local-exec -fno-exceptions
 LDFLAGS?=
 # required
-RE2_CXXFLAGS?=-std=c++11 -pthread -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I. $(CCICU) $(CCPCRE)
+# RE2_CXXFLAGS?=-std=c++11 -pthread -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I. $(CCICU) $(CCPCRE)
+RE2_CXXFLAGS?=-std=c++11 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -I. $(CCICU) $(CCPCRE)
 RE2_LDFLAGS?=-pthread $(LDICU) $(LDPCRE)
-AR?=ar
+AR=/opt/wasi-sdk/bin/llvm-ar
 ARFLAGS?=rsc
-NM?=nm
+NM=/opt/wasi-sdk/bin/llvm-nm
 NMFLAGS?=-p
 
 # Variables mandated by GNU, the arbiter of all good taste on the internet.
